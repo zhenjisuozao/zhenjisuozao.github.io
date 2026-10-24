@@ -1,0 +1,17 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>授权完成</title>
+<style>body{font-family:-apple-system,sans-serif;max-width:640px;margin:32px auto;padding:0 16px}#code{word-break:break-all;background:#f3f3f3;padding:12px;border-radius:8px;font-family:monospace}button{font-size:18px;padding:10px 18px;margin-top:12px}</style></head>
+<body>
+<h2>特斯拉授权回调</h2>
+<p id="msg">正在读取授权码…</p>
+<div id="code"></div>
+<button id="copy" style="display:none">复制整段（发给 Grok Bot）</button>
+<p style="color:#666;font-size:14px">授权码几分钟内有效、只能用一次。请尽快把上面整段内容发给 Grok Bot。此页面不会把授权码发送到任何服务器。</p>
+<script>
+var p=new URLSearchParams(location.search),c=p.get('code'),s=p.get('state'),e=p.get('error');
+var m=document.getElementById('msg'),b=document.getElementById('code'),btn=document.getElementById('copy');
+if(e){m.textContent='授权失败：'+e+' '+(p.get('error_description')||'');}
+else if(c){m.textContent='授权成功，请复制下面的内容：';var t='code='+c+(s?'&state='+s:'');b.textContent=t;btn.style.display='inline-block';
+btn.onclick=function(){navigator.clipboard.writeText(t).then(function(){btn.textContent='已复制 ✓';});};}
+else{m.textContent='没有在地址里找到授权码（code）。';}
+</script>
+</body></html>
